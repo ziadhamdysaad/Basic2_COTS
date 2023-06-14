@@ -159,7 +159,7 @@ uint8 CLCD_u8WriteSpecialCharacter(uint8 copy_u8PatternNumber,uint8 copy_pu8Patt
 
 
 
-void CLCD_voidSendDataAsString(uint8* const copy_u8pString )
+void CLCD_voidSendDataAsString(char* const copy_u8pString )
 
 {
 	uint8 Local_u8LoopCounter=0;
@@ -173,58 +173,31 @@ void CLCD_voidSendDataAsString(uint8* const copy_u8pString )
 void CLCD_voidSendDataAsNumbers(sint32 copy_s32Number)
 {
 
-	sint32 Local_s32Remainder=0;
-	sint32 Local_s32Result=0;
-	sint32 Local_s32Digit;
-	if (copy_s32Number>=0)
+	sint8 Local_s8LoopIter;
+	uint8 Local_u8RightDigit,Local_u8Counter=0;
+	char Local_chNumber[10];
+	if (copy_s32Number==0)
 	{
-		if (copy_s32Number>0)
-		{
-			while(copy_s32Number>0)
-			{
-				Local_s32Remainder=copy_s32Number % 10;
-
-				copy_s32Number/=10;
-				Local_s32Result=Local_s32Remainder+Local_s32Result*10;
-
-			}
-			while(Local_s32Result>0)
-			{
-				Local_s32Digit=Local_s32Result%10;
-				Local_s32Result/=10;
-				CLCD_voidSendData('0'+Local_s32Digit);
-
-			}
-
-		}
-		else
-		{
-			CLCD_voidSendData('0');
-		}
+		CLCD_voidSendData('0');
+		return;
 	}
-	else
+	else if (copy_s32Number<0)//number is negative
 	{
+		CLCD_voidSendData('-');
 		copy_s32Number*=-1;
-		{
-			while(copy_s32Number>0)
-			{
-				Local_s32Remainder=copy_s32Number % 10;
-				copy_s32Number/=10;
-				Local_s32Result=Local_s32Remainder+Local_s32Result*10;
-
-			}
-			CLCD_voidSendData('-');
-			while(Local_s32Result>0)
-			{
-				Local_s32Digit=Local_s32Result%10;
-				Local_s32Result/=10;
-				CLCD_voidSendData('0'+Local_s32Digit);
-
-			}
-
-		}
-
 	}
+	while(copy_s32Number != 0)
+	{
+		Local_u8RightDigit=copy_s32Number % 10;//get the right most digit
+		copy_s32Number /= 10;
+		Local_chNumber[Local_u8Counter]=Local_u8RightDigit+'0';
+		Local_u8Counter++;
+	}
+	for (Local_s8LoopIter=(sint8)Local_u8Counter-1;Local_s8LoopIter>=0;Local_s8LoopIter--)
+	{
+		CLCD_voidSendData(Local_chNumber[(uint8)Local_s8LoopIter]);
+	}
+
 }
 
 
