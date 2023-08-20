@@ -31,7 +31,7 @@
 #endif
 
 
-#define CLCD_DATA_PORT 				    DIO_PORTA
+#define CLCD_DATA_PORT 				DIO_PORTA
 #define CLCD_CTRL_PORT       			DIO_PORTA
 
 #define CLCD_RS_PIN					DIO_PIN1

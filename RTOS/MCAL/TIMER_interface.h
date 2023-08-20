@@ -1,12 +1,6 @@
 #ifndef TIMER_INTERFACE_H
 #define TIMER_INTERFACE_H
 
-typedef enum
-{
-	TIMER0=0,
-	TIMER1,
-	TIMER2,
-}TIMER_IntNum_t;
 /*this two macros to chose between modes */
 
 
@@ -23,15 +17,11 @@ typedef enum
 
 
 void Timer0_init(void);
-uint8 TIMER_u8SetCallBack(TIMER_IntNum_t copy_IntNum, void(*copy_pvFuncPtr)(void));
+uint8 TIMER_SetCallBack(void(*copy_vpFuncPtr)(void));
 void Timer0_voidSetCompVal(uint8 copy_u8CompVal);
 void Timer1_init(void);
 uint16 Timer1_u16GetTimer1Val(void);
-void Timer1_voidSetCompVal(uint16 copy_u16CompVal);
-void Timer1_voidSetOverFlowVal(uint16 copy_u16OverFlowVal);
-
 void TIMER1_voidSetTimerVal(uint16 copy_u16Val);
-
 
 
 
